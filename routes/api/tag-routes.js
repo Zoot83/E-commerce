@@ -25,10 +25,17 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   // find a single tag by its `id`
   // be sure to include its associated Product data
+  
   try{
     const searchedTag = await Tag.findOne({
-      include:[{ model: Product, through: ProductTag, as: 'products'}]
-    },{where: {id: req.params.id}});
+      where: {id: req.params.id},
+      include:[{ 
+        
+        model: Product,
+        through: ProductTag,
+        as: 'products',
+      }]
+      });
     if(!searchedTag){
       res.status(500).json({ message: 'This is not in the table' });
       return;

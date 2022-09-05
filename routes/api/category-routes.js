@@ -23,8 +23,9 @@ router.get('/:id', async (req, res) => {
   // be sure to include its associated Products
   try{
     const searchedTag = await Category.findOne({
+      where: {id: req.params.id},
       include:[{ model: Product, as: 'products'}]
-    },{where: {id: req.params.id}});
+    });
     if(!searchedTag){
       res.status(500).json({ message: 'This is not in the table' });
       return;

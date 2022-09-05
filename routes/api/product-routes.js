@@ -23,8 +23,14 @@ router.get('/:id',async  (req, res) => {
   // be sure to include its associated Category and Tag data
   try{
     const searchedProduct = await Product.findOne({
-    include:[{ model: Tag, through: ProductTag, as: 'tags'},{model:Category, as:'category' }]
-    },{where: {id: req.params.id}});
+      where: {id: req.params.id},
+      include:[{ 
+        model: Tag, 
+        through: ProductTag, as: 'tags'},
+        {model:Category, as:'category' 
+    }]
+    
+  });
     
     if(!searchedProduct === null){
       console.log("Product not found");
